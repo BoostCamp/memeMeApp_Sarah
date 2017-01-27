@@ -13,6 +13,8 @@ class MemeTableViewCell: UITableViewCell {
     @IBOutlet weak var memeImage: UIImageView!
     @IBOutlet weak var topTextLabel: UILabel!
     @IBOutlet weak var bottomTextLabel: UILabel!
+    @IBOutlet weak var topImageLabel: UILabel!
+    @IBOutlet weak var bottomImageLabel: UILabel!
     
     
     override func awakeFromNib() {
@@ -29,5 +31,18 @@ class MemeTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    func cellConfiguration(_ meme: Meme)
+    {
+        let top = meme.topText
+        let bottom = meme.bottomText
+        
+        textStyle(top!, label: topImageLabel)
+        textStyle(bottom!, label: bottomImageLabel)
+        
+        memeImage.image = meme.originalImage
+        topTextLabel.text = top
+        bottomTextLabel.text = bottom
+    }
+    
 
 }

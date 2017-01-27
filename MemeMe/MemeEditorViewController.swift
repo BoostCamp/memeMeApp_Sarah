@@ -37,14 +37,15 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     let topTextFieldDefault = "TOP"
     let bottomTextFieldDefault = "BOTTOM"
     
-    private var BeginEditingTopTextField = false
-    private var BeginEditingBottomTextField = false
+    var editTopTextField: String?
+    var editBottomTextField: String?
     
     var memedImage: UIImage!
     var currentImage: UIImage!
     
     let memesArray = MemeData.sharedInstance.memes
    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -53,8 +54,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
        
         setTextField(topTextField)
         setTextField(bottomTextField)
-        topTextField.tag = 1
-        bottomTextField.tag = 2
         
     }
     
@@ -62,6 +61,13 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if currentImage != nil{
+            imageSet()
+            if let top = editTopTextField, let bottom = editBottomTextField{
+                topTextField.text = top
+                bottomTextField.text = bottom
+            }
+        }
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         subscribeToKeyboardNotifications()
     }
@@ -87,7 +93,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
 
     //cancel button
     @IBAction func cancel(_ sender: Any) {
-        
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -112,23 +117,26 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            imagePicker.image = image
-        }
-        actionButton.isEnabled = true
-        picker.dismiss(animated: false, completion: nil)
-
+ 
+        currentImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        imageSet()
+        dismiss(animated: true, completion: nil)
     }
     
    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: false, completion: nil)
     }
     
+    func imageSet()
+    {
+        imagePicker.image = currentImage
+        actionButton.isEnabled = true
+    }
+    
     
     func save()
     {
-        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePicker.image, memedImage: generateMemedImage())
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: currentImage, memedImage: memedImage)
         
         MemeData.sharedInstance.saveMemes(meme: meme)
         
@@ -162,14 +170,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
             break
         }
         
-        switch textField.tag {
-        case 1:
-            BeginEditingTopTextField = true
-        case 2:
-            BeginEditingBottomTextField = true
-        default: break
-        }
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -178,21 +178,21 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        switch textField.tag {
-        case 1:
-            BeginEditingTopTextField = false
-        case 2:
-            BeginEditingBottomTextField = false
-        default:
-            break
-        }
-    }
+        if textField.text == ""
+        {
+            if textField == topTextField{
+                textField.text = topTextFieldDefault
+            }
+            else if textField == bottomTextField{
+                textField.text = bottomTextFieldDefault
+            }
+        }}
     
     //keyboard
 
     func keyboardWillShow(_ notification:Notification)
     {
-        if BeginEditingBottomTextField{
+        if bottomTextField.isEditing{
             self.view.frame.origin.y = 1 - getKeyboardHeight(notification)
         }
     }
@@ -200,7 +200,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     func keyboardWillHide(_ notification:Notification)
     {
-        if BeginEditingBottomTextField {
+        if bottomTextField.isEditing {
             self.view.frame.origin.y = 0
         }
     }
