@@ -9,10 +9,18 @@
 import UIKit
 
 class MemeTableViewController: UITableViewController {
+    @IBOutlet weak var addMeme: UIBarButtonItem!
 
+    var memesArray :[Meme] {
+        return MemeData.sharedInstance.memes
+    }
+    
+    var memeSelected: Meme!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -20,6 +28,23 @@ class MemeTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        self.tableView.reloadData()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+    }
+    
+    @IBAction func addMeme(_ sender: Any) {
+        performSegue(withIdentifier: "gotoMemeEditor", sender: self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -34,18 +59,22 @@ class MemeTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return memesArray.count
     }
 
-    /*
+   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        let meme = memesArray[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MemeTableCell", for: indexPath) as? MemeTableViewCell
 
-        // Configure the cell...
-
-        return cell
+        cell?.memeImage.image = meme.memedImage
+        cell?.topTextLabel.text = meme.topText
+        cell?.bottomTextLabel.text = meme.bottomText
+        return cell!
+        
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -55,17 +84,17 @@ class MemeTableViewController: UITableViewController {
     }
     */
 
-    /*
+ 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            
+            MemeData.sharedInstance.removeMeme(memeIndex: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
+ 
 
     /*
     // Override to support rearranging the table view.
@@ -82,14 +111,13 @@ class MemeTableViewController: UITableViewController {
     }
     */
 
-    /*
+ 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+            }
 
 }

@@ -13,7 +13,7 @@ private let reuseIdentifier = "Cell"
 class MemeCollectionViewController: UICollectionViewController {
 
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
-    @IBOutlet weak var memeImageView: UIImageView!
+    
     
     var memes: [Meme]!
     

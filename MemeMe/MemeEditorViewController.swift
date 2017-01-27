@@ -21,9 +21,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var albumButton: UIBarButtonItem!
     
     //top bar
-    @IBOutlet weak var topToolbar: UIToolbar!
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
     
     
     let memeTextAttributes:[String:Any] = [
@@ -43,6 +43,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     var memedImage: UIImage!
     var currentImage: UIImage!
     
+    let memesArray = MemeData.sharedInstance.memes
    
     override func viewDidLoad() {
         
@@ -127,9 +128,10 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     func save()
     {
-        var meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePicker.image, memedImage: generateMemedImage())
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePicker.image, memedImage: generateMemedImage())
         
-        (UIApplication.shared.delegate as! AppDelegate).memes.append(meme)
+        MemeData.sharedInstance.saveMemes(meme: meme)
+        
     }
     
     func generateMemedImage() -> UIImage
@@ -223,7 +225,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     func hideToolbar(_ state:Bool)
     {
-        topToolbar.isHidden = state
+        self.navigationController?.isNavigationBarHidden = state
         bottomToolbar.isHidden = state
     }
 }
