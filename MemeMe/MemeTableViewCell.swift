@@ -23,6 +23,7 @@ class MemeTableViewCell: UITableViewCell {
         memeImage.clipsToBounds = true
         
         accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,6 +31,5 @@ class MemeTableViewCell: UITableViewCell {
 
     }
 
-    
 
 }
