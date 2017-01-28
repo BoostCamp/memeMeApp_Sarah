@@ -153,22 +153,22 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     func generateMemedImage() -> UIImage
     {
-        var image = UIImage()
+        toolbarHide(true)
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        meme.memedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
-            if view.restorationIdentifier == "meme"{
-                UIGraphicsBeginImageContext(self.view.frame.size)
-                
-               let statusBarHeight = (view.window?.convert(UIApplication.shared.statusBarFrame, from:view))!.height
-               let toolbarHeight = topToolbar.frame.height
-               let context = UIGraphicsGetCurrentContext()
-                context?.translateBy(x: 0, y: -(statusBarHeight + toolbarHeight))
-                
-                view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
-                image = UIGraphicsGetImageFromCurrentImageContext()!
-                UIGraphicsEndImageContext()
-        }
+        toolbarHide(false)
         
-        return image
+        return meme.memedImage
+        
+    }
+    
+    func toolbarHide(_ state:Bool)
+    {
+        topToolbar.isHidden = state
+        bottomToolbar.isHidden = state
     }
    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

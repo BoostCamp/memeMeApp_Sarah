@@ -237,9 +237,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U8R-Nv-q8x" userLabel="Top Toolbar">
-                                <rect key="frame" x="0.0" y="22" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8R-Nv-q8x" userLabel="Top Toolbar">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="PQc-FD-Gd8"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem systemItem="action" id="m97-Bp-NE1">
                                         <connections>
@@ -254,27 +256,23 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jTj-qa-1cw" userLabel="image Picker">
-                                <rect key="frame" x="0.0" y="66" width="375" height="549"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jTj-qa-1cw" userLabel="image Picker">
+                                <rect key="frame" x="0.0" y="64" width="375" height="551"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="551" id="OWf-un-k8g"/>
+                                </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="lUt-bP-RAM" userLabel="Top Text Field">
-                                <rect key="frame" x="16" y="159" width="343" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="40"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="PSw-6C-lGq" userLabel="Bottom Text Field">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="PSw-6C-lGq" userLabel="Bottom Text Field">
                                 <rect key="frame" x="16" y="414" width="343" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="40"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iiW-dx-7XZ" userLabel="BottomToolbar">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiW-dx-7XZ" userLabel="BottomToolbar">
                                 <rect key="frame" x="0.0" y="615" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Wyb-Xp-XyG"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="POD-ye-rSZ"/>
                                     <barButtonItem title="Pick" id="isp-Uu-GeB">
@@ -291,8 +289,32 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="wC0-o5-kXw"/>
                                 </items>
                             </toolbar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="lUt-bP-RAM" userLabel="Top Text Field">
+                                <rect key="frame" x="16" y="207" width="343" height="48"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="40"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="PSw-6C-lGq" firstAttribute="top" secondItem="lUt-bP-RAM" secondAttribute="bottom" constant="159" id="3v6-zz-NOS"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="trailing" secondItem="U8R-Nv-q8x" secondAttribute="trailing" id="4HM-ty-eMA"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="leading" secondItem="odx-sz-cV6" secondAttribute="leading" id="5fe-lR-v3H"/>
+                            <constraint firstItem="lUt-bP-RAM" firstAttribute="leading" secondItem="odx-sz-cV6" secondAttribute="leadingMargin" id="KDz-UC-ShQ"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="top" secondItem="jTj-qa-1cw" secondAttribute="bottom" id="LRC-4l-qlL"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="trailing" secondItem="jTj-qa-1cw" secondAttribute="trailing" id="M7V-yJ-2nK"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="top" secondItem="jTj-qa-1cw" secondAttribute="bottom" id="P2Y-fZ-rH5"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="leading" secondItem="jTj-qa-1cw" secondAttribute="leading" id="PUc-yz-BLA"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="centerX" secondItem="PSw-6C-lGq" secondAttribute="centerX" id="Tit-sR-pZT"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="centerX" secondItem="lUt-bP-RAM" secondAttribute="centerX" id="aE8-2X-cJd"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="iiW-dx-7XZ" secondAttribute="bottom" constant="8" id="bNW-LO-efp"/>
+                            <constraint firstItem="lUt-bP-RAM" firstAttribute="top" secondItem="odx-sz-cV6" secondAttribute="top" constant="207" id="hm9-RF-4L0"/>
+                            <constraint firstItem="iiW-dx-7XZ" firstAttribute="leading" secondItem="U8R-Nv-q8x" secondAttribute="leading" id="kfJ-Nk-hMG"/>
+                            <constraint firstItem="jTj-qa-1cw" firstAttribute="top" secondItem="U8R-Nv-q8x" secondAttribute="bottom" id="kpL-eH-Qv9"/>
+                            <constraint firstItem="lUt-bP-RAM" firstAttribute="leading" secondItem="PSw-6C-lGq" secondAttribute="leading" id="uDa-CS-EvN"/>
+                            <constraint firstAttribute="trailing" secondItem="iiW-dx-7XZ" secondAttribute="trailing" id="xWt-63-lIT"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
