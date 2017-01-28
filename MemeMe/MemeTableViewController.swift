@@ -10,99 +10,75 @@ import UIKit
 
 class MemeTableViewController: UITableViewController {
     
-    @IBOutlet weak var addMeme: UIBarButtonItem!
-    @IBOutlet var MemeTableView: UITableView!
+//    @IBOutlet weak var addMeme: UIBarButtonItem!
+//   @IBOutlet var MemeTableView: UITableView!
 
-    var memesArray :[Meme] {
-        return MemeData.sharedInstance.memes
+    var memes :[Meme] {
+        return (UIApplication.shared.delegate as! AppDelegate).memes
     }
     
-    var memeSelected: Meme!
+ //   var memeArray = [Meme]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
 
-    }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     
-    override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
         
-    }
-    
-    @IBAction func addMeme(_ sender: Any) {
-        performSegue(withIdentifier: "gotoMemeEditor", sender: self)
+//        var savedMemes = loadMemes()
+//        memes.append(savedMemes)
+        
     }
     
 
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return memesArray.count
+        return memes.count
     }
 
    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let meme = memesArray[indexPath.row]
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "MemeTableCell", for: indexPath) as? MemeTableViewCell{
-            cell.cellConfiguration(meme)
-            return cell
-        }
-        else{
-            return MemeTableViewCell()
-        }
+        let meme = memes[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MemeTableCell")
+        cell?.imageView?.image = meme.memedImage
+        cell?.textLabel?.text = meme.topText
+        cell?.detailTextLabel?.text = meme.bottomText
         
+        return cell!
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        memeSelected = memesArray[indexPath.row]
-        performSegue(withIdentifier: "tableDetail", sender: nil)
+ 
+        let controller = storyboard?.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
+        
+        controller.meme = memes[indexPath.row]
+        navigationController?.pushViewController(controller, animated: true)
+       // saveMemes()
     }
  
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            
-            MemeData.sharedInstance.removeMeme(memeIndex: indexPath.row)
+            (UIApplication.shared.delegate as! AppDelegate).memes.remove(at: indexPath.row)
+            //saveMemes()
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
         }
     }
- 
- 
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "tableDetail"
-        {
-            if let detailViewController = segue.destination as? MemeDetailViewController{
-                detailViewController.selecetedMeme = memeSelected
-            }
+    //NSCoding
+    func saveMemes()
+    {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(memes, toFile: Meme.MemeClass.ArchiveURL.path)
+        if !isSuccessfulSave{
+            print("fail to save meals")
         }
     }
-
     
-    override func encodeRestorableState(with coder: NSCoder) {
-        coder.encode(MemeData.sharedInstance.memes)
-        super.encodeRestorableState(with: coder)
+    func loadMemes() -> [Meme]?{
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Meme.MemeClass.ArchiveURL.path) as? [Meme]
     }
     
-    override func decodeRestorableState(with coder: NSCoder) {
-        coder.decodeData()
-        super.decodeRestorableState(with: coder)
-    }
 }

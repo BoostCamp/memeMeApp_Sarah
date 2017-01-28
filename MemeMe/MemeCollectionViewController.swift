@@ -8,30 +8,22 @@
 
 import UIKit
 
-class MemeCollectionViewController: UICollectionViewController {
+class MemeCollectionViewController: UICollectionViewController{
 
-    @IBOutlet var MemeCollectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
-    var memeArray: [Meme]{
-        return MemeData.sharedInstance.memes
+    var memes: [Meme]{
+        return (UIApplication.shared.delegate as! AppDelegate).memes
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.reloadData()
         composeFlowLayout()
 
-        // Register cell classes
-
-        // Do any additional setup after loading the view.
+        var savedMemes = loadMemes()
+        savedMemes?.append(contentsOf: memes)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func composeFlowLayout ()
     {
         let space: CGFloat = 3.0
@@ -43,68 +35,46 @@ class MemeCollectionViewController: UICollectionViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        collectionView?.reloadData()
+        composeFlowLayout()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
     
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return memeArray.count
+        return memes.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let meme = memes[indexPath.row]
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as? MemeCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as! MemeCollectionViewCell
+        cell.memeImage.image = meme.memedImage
+  //      saveMemes()
+        return cell
+    }
     
     
-        // Configure the cell
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let collectionController = storyboard?.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
+        collectionController.meme = memes[indexPath.row]
+        
+        navigationController?.pushViewController(collectionController, animated: true)
+        //saveMemes()
+    }
     
-        return cell!
+    //NSCoding
+    func saveMemes()
+    {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(memes, toFile: Meme.MemeClass.ArchiveURL.path)
+        if !isSuccessfulSave{
+            print("fail to save meals")
+        }
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
+    func loadMemes() -> [Meme]?{
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Meme.MemeClass.ArchiveURL.path) as? [Meme]
     }
-    */
 
 }
