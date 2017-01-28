@@ -14,8 +14,6 @@ class MemeTableViewCell: UITableViewCell {
     @IBOutlet weak var topTextLabel: UILabel!
     @IBOutlet weak var bottomTextLabel: UILabel!
 
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         

@@ -27,7 +27,6 @@ class MemeTableViewController: UITableViewController {
     }
     
 
-    // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return memes.count
     }
@@ -46,7 +45,6 @@ class MemeTableViewController: UITableViewController {
     
         }
 
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
  
         let controller = storyboard?.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
@@ -56,14 +54,13 @@ class MemeTableViewController: UITableViewController {
        // saveMemes()
     }
  
-    // Override to support editing the table view.
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            
             (UIApplication.shared.delegate as! AppDelegate).memes.remove(at: indexPath.row)
             //saveMemes()
             tableView.deleteRows(at: [indexPath], with: .fade)
-            
         }
     }
     

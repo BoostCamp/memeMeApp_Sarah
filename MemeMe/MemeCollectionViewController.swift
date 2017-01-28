@@ -33,13 +33,12 @@ class MemeCollectionViewController: UICollectionViewController{
         flowLayout.minimumLineSpacing = space
         flowLayout.itemSize = CGSize(width: dimension, height: dimension)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView?.reloadData()
         composeFlowLayout()
     }
-
-    // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return memes.count

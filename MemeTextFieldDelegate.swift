@@ -13,8 +13,6 @@ class MemeTextFieldDelegate: NSObject, UITextFieldDelegate {
     
     var isTextDefault: Bool = true
     
-
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if isTextDefault {
             textField.text = ""

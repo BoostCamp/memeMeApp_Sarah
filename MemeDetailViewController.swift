@@ -20,6 +20,7 @@ class MemeDetailViewController: UIViewController {
         selectedMemeImage.image = meme.memedImage
     }
 
+    //edit button action
     @IBAction func editMeme(_ sender: UIBarButtonItem) {
         
         let controller = storyboard!.instantiateViewController(withIdentifier: "MemeEditorViewController") as! MemeEditorViewController

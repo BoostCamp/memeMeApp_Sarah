@@ -99,8 +99,8 @@
 		675679AA1E3B39FD001B127A /* source */ = {
 			isa = PBXGroup;
 			children = (
-				67FB4D721E3C563F008C05B2 /* MemeTextFieldDelegate.swift */,
 				67FB4D741E3C7224008C05B2 /* KeyBoardMove.swift */,
+				67FB4D721E3C563F008C05B2 /* MemeTextFieldDelegate.swift */,
 			);
 			name = source;
 			sourceTree = "<group>";

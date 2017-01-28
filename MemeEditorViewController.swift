@@ -63,7 +63,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         super.viewDidAppear(animated)
     }
     
-    //textfield
+    //initialize textfield
     func setTextField(_ element: UITextField, text: String, delegate: UITextFieldDelegate)
     {
         let memeTextAttributes:[String:Any] = [
@@ -81,7 +81,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         element.isHidden = true
     }
     
-    //share button
+ /* button Action */
+    //share button action
     @IBAction func pressAction(_ sender: UIBarButtonItem) {
     
         let image = generateMemedImage()
@@ -111,7 +112,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBAction func pickAnImageCamera(_ sender: Any) {
         imagePickerPresent(.camera)
     }
-    
+  
+/* image Picker Controll */
     func imagePickerPresent(_ chosenSource: UIImagePickerControllerSourceType)
     {
         let picker = UIImagePickerController()
@@ -140,7 +142,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         topTextField.isHidden = false
         actionButton.isEnabled = true
     }
-    
     
     func saveMemedImage(_ image: UIImage)
     {
