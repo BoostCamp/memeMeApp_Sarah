@@ -14,16 +14,10 @@ class MemeTableViewController: UITableViewController {
         return (UIApplication.shared.delegate as! AppDelegate).memes
     }
     
- //   var memeArray = [Meme]()
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     
         self.tableView.reloadData()
-        
-//        var savedMemes = loadMemes()
-//        memes.append(savedMemes)
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,7 +43,6 @@ class MemeTableViewController: UITableViewController {
         
         controller.meme = memes[indexPath.row]
         navigationController?.pushViewController(controller, animated: true)
-       // saveMemes()
     }
  
     
@@ -57,7 +50,6 @@ class MemeTableViewController: UITableViewController {
         if editingStyle == .delete {
             
             (UIApplication.shared.delegate as! AppDelegate).memes.remove(at: indexPath.row)
-            //saveMemes()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

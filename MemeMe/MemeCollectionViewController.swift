@@ -19,9 +19,6 @@ class MemeCollectionViewController: UICollectionViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         composeFlowLayout()
-
-        var savedMemes = loadMemes()
-        savedMemes?.append(contentsOf: memes)
     }
 
     func composeFlowLayout ()
@@ -49,7 +46,7 @@ class MemeCollectionViewController: UICollectionViewController{
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as! MemeCollectionViewCell
         cell.memeImage.image = meme.memedImage
-  //      saveMemes()
+        
         return cell
     }
     
@@ -60,7 +57,7 @@ class MemeCollectionViewController: UICollectionViewController{
         collectionController.meme = memes[indexPath.row]
         
         navigationController?.pushViewController(collectionController, animated: true)
-        //saveMemes()
+
     }
     
     //NSCoding
