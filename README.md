@@ -7,7 +7,7 @@ After adding text to an image chosen from the Photo Album or Camera, the user ca
 
 - **EditorController** - consists of an image view and two text fields. User pick photo from the camera or existing photo album.
 
-- **TableController** and **CollectionController** - displays recently sent memes.  
+- **TableController** and **CollectionController** - displays recently sent memes. User can delete selected image in Table View Controller.
 
 - **DetailController** - displays the selected meme in an image view in the center of the page with the meme’s original image. User can edit the selected memed image as well.
 
