@@ -15,9 +15,8 @@ After adding text to an image chosen from the Photo Album or Camera, the user ca
 
 ---
 ## Screenshots
-
-
-
+<img src= "./image/1.PNG", width = "250">    <img src= "./image/2.PNG", width = "250">
+<img src= "./image/3", width = "250">    <img src= "./image/4.PNG", width = "250">
 
 ---
 ## Main Development Technique
