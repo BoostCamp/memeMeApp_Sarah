@@ -27,5 +27,5 @@ After adding text to an image chosen from the Photo Album or Camera, the user ca
 
 --
 ## Demo video Youtube Link
-
-<https://www.youtube.com/watch?v=56YzYAdKdek>
+[link](https://www.youtube.com/watch?v=56YzYAdKdek)
+[![Alt text for your video](http://i67.tinypic.com/mkd4wk.png)](https://www.youtube.com/watch?v=56YzYAdKdek)
