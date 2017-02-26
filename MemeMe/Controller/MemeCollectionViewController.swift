@@ -12,13 +12,19 @@ class MemeCollectionViewController: UICollectionViewController{
 
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
-    var memes: [Meme]{
-        return (UIApplication.shared.delegate as! AppDelegate).memes
-    }
+    var memes = MemeData.sharedInstance.memes
     
     override func viewDidLoad() {
         super.viewDidLoad()
         composeFlowLayout()
+        
+        if let showMemes = loadMemes()
+        {
+        memes += showMemes
+        }
+        else{
+            print("nothing to show")
+        }
     }
 
     func composeFlowLayout ()
@@ -55,7 +61,7 @@ class MemeCollectionViewController: UICollectionViewController{
         
         let collectionController = storyboard?.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
         collectionController.meme = memes[indexPath.row]
-        
+        saveMemes()
         navigationController?.pushViewController(collectionController, animated: true)
 
     }
@@ -65,7 +71,10 @@ class MemeCollectionViewController: UICollectionViewController{
     {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(memes, toFile: Meme.MemeClass.ArchiveURL.path)
         if !isSuccessfulSave{
-            print("fail to save meals")
+            print("fail to save memes")
+        }
+        else{
+            print("sucess to save memes")
         }
     }
     

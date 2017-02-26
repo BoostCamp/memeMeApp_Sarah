@@ -13,7 +13,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
 
     @IBOutlet weak var imagePicker: UIImageView!
     
- 
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
@@ -30,6 +29,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     let bottomTextDelegate = MemeTextFieldDelegate()
     
     var meme = Meme()
+    
+    var memes = MemeData.sharedInstance.memes
     
     override func viewDidLoad() {
         
@@ -149,7 +150,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         meme.bottomText = bottomTextField.text!
         meme.originalImage = imagePicker.image!
         meme.memedImage = image
-        (UIApplication.shared.delegate as! AppDelegate).memes.append(meme)
+        
+        memes.append(meme)
+        saveMemes()
     }
     
     func generateMemedImage() -> UIImage
@@ -171,7 +174,17 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         topToolbar.isHidden = state
         bottomToolbar.isHidden = state
     }
-   /*
+    
+    //NSCoding
+    func saveMemes()
+    {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(memes, toFile: Meme.MemeClass.ArchiveURL.path)
+        if !isSuccessfulSave{
+            print("fail to save meals")
+        }
+    }
+    
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         meme = Meme(topText: meme.topText, bottomText: meme.bottomText, originalImage: meme.originalImage, memedImage: meme.memedImage )

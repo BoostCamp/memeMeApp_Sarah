@@ -10,8 +10,17 @@ import UIKit
 
 class MemeTableViewController: UITableViewController {
 
-    var memes :[Meme] {
-        return (UIApplication.shared.delegate as! AppDelegate).memes
+    var memes = MemeData.sharedInstance.memes
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let showMemes = loadMemes(){
+            memes += showMemes
+        }
+        else
+        {
+            print("nothing to show")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +58,8 @@ class MemeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            (UIApplication.shared.delegate as! AppDelegate).memes.remove(at: indexPath.row)
+            memes.remove(at: indexPath.row)
+            saveMemes()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -59,7 +69,10 @@ class MemeTableViewController: UITableViewController {
     {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(memes, toFile: Meme.MemeClass.ArchiveURL.path)
         if !isSuccessfulSave{
-            print("fail to save meals")
+            print("fail to save memes")
+        }
+        else{
+            print("success to save memes")
         }
     }
     
